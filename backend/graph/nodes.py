@@ -138,11 +138,22 @@ def Rank_products(state:AgentState):
     state['ranking_explanation'] = result.explanation
     return state
 
-# Fourth node 
+
+# Fourth node
 # Fourth node
 def upsell_crosssell_products(state: AgentState):
-    selected_product = state['selected_product']
-    intent = state['user_intent']
+    selected_product = state.get('selected_product')
+    intent = state.get('user_intent', {})
+
+    # No suitable main product was found.
+    # Skip the LLM upsell step because there is nothing to build on.
+    if not selected_product:
+        state['recommended_products'] = []
+        state['upsell_explanation'] = (
+            "No suitable product was found in the TechNest catalog "
+            "for your requirements and budget."
+        )
+        return state
 
     products = load_products()
 
@@ -214,7 +225,6 @@ def upsell_crosssell_products(state: AgentState):
         )
 
     return state
-    
 # Fifth node
 
 def Build_basket(state:AgentState):
