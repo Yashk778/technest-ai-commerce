@@ -1,0 +1,236 @@
+[
+  {
+    "id": "LAP001",
+    "name": "TechNest ProBook 14",
+    "brand": "TechNest",
+    "category": "laptop",
+    "price": 54999,
+    "image": "/products/probook-14.png",
+    "description": "14-inch laptop designed for productivity and development.",
+    "tags": ["coding", "productivity", "student", "work"],
+    "specs": {
+      "ram": "16GB",
+      "storage": "512GB SSD",
+      "processor": "Intel Core i5",
+      "battery": "10 hours",
+      "display": "14-inch FHD"
+    }
+  },
+  {
+    "id": "LAP002",
+    "name": "TechNest LiteBook 15",
+    "brand": "TechNest",
+    "category": "laptop",
+    "price": 44999,
+    "image": "/products/litebook-15.png",
+    "description": "Affordable 15.6-inch laptop for everyday computing.",
+    "tags": ["student", "budget", "productivity", "office"],
+    "specs": {
+      "ram": "8GB",
+      "storage": "512GB SSD",
+      "processor": "Intel Core i3",
+      "battery": "8 hours",
+      "display": "15.6-inch FHD"
+    }
+  },
+  {
+    "id": "LAP003",
+    "name": "TechNest UltraBook X",
+    "brand": "TechNest",
+    "category": "laptop",
+    "price": 69999,
+    "image": "/products/ultrabook-x.png",
+    "description": "High-performance laptop with large storage and long battery life.",
+    "tags": ["coding", "performance", "professional", "creator"],
+    "specs": {
+      "ram": "16GB",
+      "storage": "1TB SSD",
+      "processor": "AMD Ryzen 7",
+      "battery": "12 hours",
+      "display": "14-inch 2.5K"
+    }
+  },
+  {
+    "id": "HP001",
+    "name": "TechNest SoundMax Pro",
+    "brand": "TechNest",
+    "category": "headphones",
+    "price": 2999,
+    "image": "/products/soundmax-pro.png",
+    "description": "Wireless headphones with active noise cancellation.",
+    "tags": ["music", "travel", "work", "anc"],
+    "specs": {
+      "type": "Wireless",
+      "noise_cancellation": "ANC",
+      "battery": "40 hours",
+      "connectivity": "Bluetooth 5.3"
+    }
+  },
+  {
+    "id": "HP002",
+    "name": "TechNest BassLite",
+    "brand": "TechNest",
+    "category": "headphones",
+    "price": 1499,
+    "image": "/products/basslite.png",
+    "description": "Affordable wireless headphones for everyday listening.",
+    "tags": ["music", "budget", "travel"],
+    "specs": {
+      "type": "Wireless",
+      "noise_cancellation": "None",
+      "battery": "25 hours",
+      "connectivity": "Bluetooth 5.2"
+    }
+  },
+  {
+    "id": "KB001",
+    "name": "TechNest Mechanical K1",
+    "brand": "TechNest",
+    "category": "keyboard",
+    "price": 2499,
+    "image": "/products/mechanical-k1.png",
+    "description": "Full-size mechanical keyboard with RGB backlighting.",
+    "tags": ["coding", "gaming", "productivity"],
+    "specs": {
+      "type": "Mechanical",
+      "connection": "USB-C",
+      "layout": "Full Size",
+      "backlight": "RGB"
+    }
+  },
+  {
+    "id": "KB002",
+    "name": "TechNest Compact K2",
+    "brand": "TechNest",
+    "category": "keyboard",
+    "price": 1799,
+    "image": "/products/compact-k2.png",
+    "description": "Compact wireless mechanical keyboard for smaller workspaces.",
+    "tags": ["coding", "portable", "productivity"],
+    "specs": {
+      "type": "Mechanical",
+      "connection": "Wireless",
+      "layout": "75%",
+      "backlight": "White"
+    }
+  },
+  {
+    "id": "MS001",
+    "name": "TechNest Precision M1",
+    "brand": "TechNest",
+    "category": "mouse",
+    "price": 1299,
+    "image": "/products/precision-m1.png",
+    "description": "High-precision wireless mouse for productivity and gaming.",
+    "tags": ["coding", "gaming", "productivity"],
+    "specs": {
+      "type": "Wireless",
+      "dpi": "16000",
+      "connection": "Bluetooth + USB"
+    }
+  },
+  {
+    "id": "MS002",
+    "name": "TechNest Basic M2",
+    "brand": "TechNest",
+    "category": "mouse",
+    "price": 699,
+    "image": "/products/basic-m2.png",
+    "description": "Simple wireless mouse for everyday computing.",
+    "tags": ["budget", "office", "student"],
+    "specs": {
+      "type": "Wireless",
+      "dpi": "8000",
+      "connection": "USB"
+    }
+  },
+  {
+    "id": "MON001",
+    "name": "TechNest Vision 24",
+    "brand": "TechNest",
+    "category": "monitor",
+    "price": 11999,
+    "image": "/products/vision-24.png",
+    "description": "24-inch IPS monitor for work and entertainment.",
+    "tags": ["office", "coding", "productivity"],
+    "specs": {
+      "size": "24-inch",
+      "resolution": "1080p",
+      "refresh_rate": "100Hz",
+      "panel": "IPS"
+    }
+  },
+  {
+    "id": "MON002",
+    "name": "TechNest Vision 27",
+    "brand": "TechNest",
+    "category": "monitor",
+    "price": 17999,
+    "image": "/products/vision-27.png",
+    "description": "27-inch 1440p high-refresh IPS monitor.",
+    "tags": ["coding", "gaming", "creator", "productivity"],
+    "specs": {
+      "size": "27-inch",
+      "resolution": "1440p",
+      "refresh_rate": "144Hz",
+      "panel": "IPS"
+    }
+  },
+  {
+    "id": "PH001",
+    "name": "TechNest Phone X1",
+    "brand": "TechNest",
+    "category": "smartphone",
+    "price": 24999,
+    "image": "/products/phone-x1.png",
+    "description": "Balanced smartphone with AMOLED display and 5G connectivity.",
+    "tags": ["5g", "camera", "battery", "everyday"],
+    "specs": {
+      "ram": "8GB",
+      "storage": "128GB",
+      "processor": "Octa-core",
+      "camera": "50MP",
+      "battery": "5000mAh",
+      "display": "6.6-inch AMOLED",
+      "5g": "Yes"
+    }
+  },
+  {
+    "id": "PH002",
+    "name": "TechNest Phone Pro",
+    "brand": "TechNest",
+    "category": "smartphone",
+    "price": 34999,
+    "image": "/products/phone-pro.png",
+    "description": "Premium smartphone with high RAM, large storage and 120Hz AMOLED display.",
+    "tags": ["performance", "camera", "gaming", "5g"],
+    "specs": {
+      "ram": "12GB",
+      "storage": "256GB",
+      "processor": "Flagship Octa-core",
+      "camera": "50MP OIS",
+      "battery": "5000mAh",
+      "display": "6.7-inch AMOLED 120Hz",
+      "5g": "Yes"
+    }
+  },
+  {
+    "id": "PH003",
+    "name": "TechNest Phone Lite",
+    "brand": "TechNest",
+    "category": "smartphone",
+    "price": 16999,
+    "image": "/products/phone-lite.png",
+    "description": "Affordable 5G smartphone with a large battery.",
+    "tags": ["budget", "battery", "5g", "everyday"],
+    "specs": {
+      "ram": "6GB",
+      "storage": "128GB",
+      "processor": "Octa-core",
+      "camera": "50MP",
+      "battery": "5000mAh",
+      "display": "6.5-inch LCD",
+      "5g": "Yes"
+    }
+  }
+]

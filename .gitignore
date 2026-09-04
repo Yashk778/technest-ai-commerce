@@ -1,0 +1,49 @@
+# =========================
+# Environment & Secrets
+# =========================
+
+.env
+.env.*
+!.env.example
+
+
+# =========================
+# Python
+# =========================
+
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+
+
+# =========================
+# Local Database
+# =========================
+
+backend/data/commerce.db
+
+
+# =========================
+# Node / Frontend
+# =========================
+
+frontend/node_modules/
+frontend/dist/
+
+
+# =========================
+# IDE / Editor
+# =========================
+
+.vscode/
+.idea/
+
+
+# =========================
+# OS Files
+# =========================
+
+.DS_Store
+Thumbs.db
