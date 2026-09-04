@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 
 function Merchant() {
 
+  const API_BASE =
+    import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000'
+
   const [dashboard, setDashboard] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -13,7 +16,7 @@ function Merchant() {
       try {
 
         const response = await fetch(
-          'http://127.0.0.1:8000/api/merchant/dashboard'
+          `${API_BASE}/api/merchant/dashboard`
         )
 
         if (!response.ok) {

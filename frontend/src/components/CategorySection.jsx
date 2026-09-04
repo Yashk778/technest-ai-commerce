@@ -4,12 +4,13 @@ function CategorySection({ cart, setCart }) {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000'
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          'http://127.0.0.1:8000/api/products'
+          `${API_BASE}/api/products`
         )
 
         if (!response.ok) {
@@ -124,9 +125,8 @@ function CategorySection({ cart, setCart }) {
                     <div className="category-badge">
                       {product.category}
                     </div>
-
-                    <img
-  src={`http://127.0.0.1:8000${product.image}`}
+<img
+  src={`${API_BASE}${product.image}`}
   alt={product.name}
 />
 

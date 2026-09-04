@@ -24,7 +24,6 @@ NODE_LABELS = {
 }
 
 
-
 PRODUCTS_DIR = os.path.join(
     os.path.dirname(__file__),
     "data",
@@ -37,13 +36,25 @@ app.mount(
     name="products"
 )
 
+
 @app.get("/api/products")
 def get_products():
     return load_products()
+
+
 # Allow React frontend to communicate with FastAPI
+FRONTEND_URL = os.getenv(
+    "FRONTEND_URL",
+    "http://localhost:5173"
+)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        FRONTEND_URL
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -59,6 +70,7 @@ def root():
 
 @app.post("/api/buy")
 def buy(request: dict):
+
     user_input = request.get("user_input", "")
 
     initial_state = {
@@ -175,6 +187,7 @@ async def buy_stream(request: dict):
             "X-Accel-Buffering": "no"
         }
     )
+
 
 @app.post("/api/approval")
 def approval(request: dict):
@@ -353,6 +366,7 @@ def approval(request: dict):
             "error": "Unable to process approval"
         }
 
+
 @app.post("/api/payment/verify")
 def payment_verify(request: dict):
 
@@ -392,6 +406,7 @@ def payment_verify(request: dict):
         "result": result
     }
 
+
 @app.get("/api/merchant/dashboard")
 def merchant_dashboard():
 
@@ -399,7 +414,11 @@ def merchant_dashboard():
     import ast
     from pathlib import Path
 
-    db_file = Path(__file__).resolve().parent / "data" / "commerce.db"
+    db_file = (
+        Path(__file__).resolve().parent
+        / "data"
+        / "commerce.db"
+    )
 
     connection = sqlite3.connect(db_file)
     connection.row_factory = sqlite3.Row
@@ -503,6 +522,7 @@ def merchant_dashboard():
         "transactions": transactions
     }
 
+
 @app.post("/api/cart/order")
 def create_cart_order(request: dict):
 
@@ -514,6 +534,7 @@ def create_cart_order(request: dict):
     total_amount = 0
 
     for product in cart:
+
         if "price" not in product:
             return {"error": "Invalid product data"}
 
@@ -533,6 +554,7 @@ def create_cart_order(request: dict):
         "amount": amount_in_paise,
         "currency": "INR"
     }
+
 
 @app.post("/api/cart/payment/verify")
 def verify_cart_payment(request: dict):
@@ -609,11 +631,12 @@ def verify_cart_payment(request: dict):
 
     except Exception as error:
 
-        print("Cart payment verification failed:", error)
+        print(
+            "Cart payment verification failed:",
+            error
+        )
 
         return {
             "status": "failed",
             "message": "Payment verification failed."
         }
-
-    
