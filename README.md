@@ -359,10 +359,6 @@ Create a `.env` file in the project root.
 
 Example configuration:
 
-    LANGCHAIN_API_KEY=your_langchain_key
-    LANGCHAIN_TRACING_V2=true
-    LANGCHAIN_PROJECT=technest
-
     GROQ_API_KEY=your_groq_key
 
     RAZORPAY_KEY_ID=your_razorpay_test_key_id
