@@ -363,6 +363,10 @@ function Hero() {
   const agentResult =
     result?.result
 
+  const noProductFound =
+    agentResult &&
+    !agentResult.selected_product
+
 
   // -----------------------------------
   // CURRENT BASKET
@@ -1200,6 +1204,7 @@ function Hero() {
           ================================= */}
 
       {agentResult &&
+        !noProductFound &&
         !paymentComplete &&
         !purchaseRejected && (
 
@@ -1813,6 +1818,40 @@ function Hero() {
       )}
 
 
+      {noProductFound &&
+        !paymentComplete &&
+        !purchaseRejected && (
+
+        <section className="ai-payment-success">
+
+          <p className="ai-result-label">
+            NO MATCH FOUND
+          </p>
+
+
+          <h2>
+            We couldn't find a suitable product.
+          </h2>
+
+
+          <p>
+            No product in the TechNest catalog matches your requirements and budget.
+          </p>
+
+
+          <button
+            onClick={
+              startNewSearch
+            }
+          >
+            Try another search
+          </button>
+
+        </section>
+
+      )}
+
+
       {/* =================================
           PURCHASE REJECTED
           ================================= */}
@@ -1938,4 +1977,4 @@ function Hero() {
 }
 
 
-export default Hero
+export default Hero 

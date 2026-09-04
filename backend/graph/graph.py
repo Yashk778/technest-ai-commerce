@@ -35,7 +35,24 @@ graph.add_node('audit_transaction',audit_transaction)
 graph.add_edge(START,'understand_intent')
 graph.add_edge('understand_intent','search_catalog')
 graph.add_edge('search_catalog','Rank_products')
-graph.add_edge('Rank_products','upsell_crosssell_products')
+
+
+def product_router(state:AgentState):
+    if state.get('selected_product'):
+        return 'product_found'
+    else:
+        return 'no_product'
+
+
+graph.add_conditional_edges(
+    'Rank_products',
+    product_router,
+    {
+        'product_found':'upsell_crosssell_products',
+        'no_product':END
+    }
+)
+
 graph.add_edge('upsell_crosssell_products','Build_basket')
 graph.add_edge('Build_basket','hitlnode')
 
@@ -85,4 +102,3 @@ checkpointer = InMemorySaver()
 
 # compile graph
 workflow  = graph.compile(checkpointer=checkpointer)
-
