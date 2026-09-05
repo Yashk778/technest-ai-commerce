@@ -115,7 +115,6 @@ Explain briefly why the recommended product is useful.
 
 # First node
 
-
 def understand_intent(state: AgentState):
     user_input = state["user_input"]
 
@@ -125,7 +124,113 @@ def understand_intent(state: AgentState):
 
     result = struc_llm.invoke(prompt)
 
-    state["user_intent"] = result.model_dump()
+    intent = result.model_dump()
+
+    # Normalize the category extracted by the LLM
+    # into one of the exact categories used by products.json.
+
+    category = intent.get("category", "").strip().lower()
+
+    category_aliases = {
+
+
+        # LAPTOP
+ 
+
+        "laptop": "laptop",
+        "laptops": "laptop",
+        "lap": "laptop",
+        "notebook": "laptop",
+        "notebooks": "laptop",
+        "notebook computer": "laptop",
+        "notebook computers": "laptop",
+        "portable computer": "laptop",
+        "portable computers": "laptop",
+
+
+        # HEADPHONES
+     
+
+        "headphone": "headphones",
+        "headphones": "headphones",
+        "headset": "headphones",
+        "headsets": "headphones",
+        "earphone": "headphones",
+        "earphones": "headphones",
+        "earbud": "headphones",
+        "earbuds": "headphones",
+        "ear bud": "headphones",
+        "ear buds": "headphones",
+        "wireless headphones": "headphones",
+        "wireless headphone": "headphones",
+        "bluetooth headphones": "headphones",
+        "bluetooth headphone": "headphones",
+
+
+        # KEYBOARD
+        
+
+        "keyboard": "keyboard",
+        "keyboards": "keyboard",
+        "key board": "keyboard",
+        "key boards": "keyboard",
+        "computer keyboard": "keyboard",
+        "computer keyboards": "keyboard",
+
+        # MOUSE
+     
+        "mouse": "mouse",
+        "mice": "mouse",
+        "mouses": "mouse",
+        "computer mouse": "mouse",
+        "computer mice": "mouse",
+        "wireless mouse": "mouse",
+        "wireless mice": "mouse",
+
+  
+        # MONITOR
+        
+
+        "monitor": "monitor",
+        "monitors": "monitor",
+        "display": "monitor",
+        "displays": "monitor",
+        "screen": "monitor",
+        "screens": "monitor",
+        "computer monitor": "monitor",
+        "computer monitors": "monitor",
+        "computer screen": "monitor",
+        "computer screens": "monitor",
+        "desktop monitor": "monitor",
+        "desktop monitors": "monitor",
+
+        # SMARTPHONE
+
+
+        "smartphone": "smartphone",
+        "smartphones": "smartphone",
+        "phone": "smartphone",
+        "phones": "smartphone",
+        "mobile": "smartphone",
+        "mobiles": "smartphone",
+        "mobile phone": "smartphone",
+        "mobile phones": "smartphone",
+        "cell phone": "smartphone",
+        "cell phones": "smartphone",
+        "cellphone": "smartphone",
+        "cellphones": "smartphone",
+        "smart mobile": "smartphone",
+        "smart mobiles": "smartphone",
+        "mobile device": "smartphone",
+        "mobile devices": "smartphone",
+    }
+
+    intent["category"] = category_aliases.get(
+        category,
+        category
+    )
+
+    state["user_intent"] = intent
 
     return state
 
