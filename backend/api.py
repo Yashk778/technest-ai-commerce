@@ -640,3 +640,54 @@ def verify_cart_payment(request: dict):
             "status": "failed",
             "message": "Payment verification failed."
         }
+
+@app.post("/api/payment/failure")
+def payment_failure(request: dict):
+
+    thread_id = request.get("thread_id")
+
+    if not thread_id:
+        return {
+            "error": "thread_id is required"
+        }
+
+    payment_data = {
+        "payment_status": "failed",
+        "razorpay_payment_id": request.get(
+            "razorpay_payment_id",
+            ""
+        ),
+        "razorpay_order_id": request.get(
+            "razorpay_order_id",
+            ""
+        )
+    }
+
+    config = {
+        "configurable": {
+            "thread_id": thread_id
+        }
+    }
+
+    try:
+
+        result = workflow.invoke(
+            Command(resume=payment_data),
+            config=config
+        )
+
+        return {
+            "thread_id": thread_id,
+            "result": result
+        }
+
+    except Exception as error:
+
+        print(
+            "Payment failure processing failed:",
+            error
+        )
+
+        return {
+            "error": "Unable to process payment failure"
+        }

@@ -50,6 +50,8 @@ function Hero() {
 
   const [paymentComplete, setPaymentComplete] = useState(false)
 
+  const [paymentFailed, setPaymentFailed] = useState(false)
+
   const [activityStages, setActivityStages] = useState([])
 
   const [purchaseRejected, setPurchaseRejected] = useState(false)
@@ -76,6 +78,8 @@ function Hero() {
     setPaymentStatus('')
 
     setPaymentComplete(false)
+
+    setPaymentFailed(false)
 
     setPurchaseRejected(false)
 
@@ -534,6 +538,8 @@ function Hero() {
 
     setError('')
 
+    setPaymentFailed(false)
+
 
     if (
       decision ===
@@ -842,6 +848,8 @@ function Hero() {
                 true
               )
 
+              setPaymentFailed(false)
+
               setPaymentStatus('')
 
             } else {
@@ -874,7 +882,7 @@ function Hero() {
 
 
       // -----------------------------------
-      // CHECKOUT CLOSED
+      // PAYMENT FAILED
       // -----------------------------------
 
       modal: {
@@ -928,6 +936,122 @@ function Hero() {
       )
 
 
+    // -----------------------------------
+    // HANDLE PAYMENT FAILURE
+    // -----------------------------------
+
+    razorpay.on(
+      'payment.failed',
+      async function (response) {
+
+        console.log(
+          'Razorpay payment failed:',
+          response
+        )
+
+
+        try {
+
+          setLoading(true)
+
+          setError('')
+
+          setPaymentStatus(
+            'Payment failed. Recording the failed transaction...'
+          )
+
+
+          const failureResponse =
+            await fetch(
+              `${API_BASE}/api/payment/failure`,
+              {
+                method: 'POST',
+
+                headers: {
+                  'Content-Type':
+                    'application/json',
+                },
+
+                body:
+                  JSON.stringify({
+
+                    thread_id:
+                      threadId,
+
+                    razorpay_payment_id:
+                      response.error?.metadata?.payment_id ||
+                      '',
+
+                    razorpay_order_id:
+                      response.error?.metadata?.order_id ||
+                      paymentData.razorpay_order_id,
+
+                  }),
+
+              }
+            )
+
+
+          const failureData =
+            await failureResponse.json()
+
+
+          if (
+            !failureResponse.ok ||
+            failureData.error
+          ) {
+
+            throw new Error(
+              failureData.error ||
+              'Unable to record payment failure'
+            )
+
+          }
+
+
+          console.log(
+            'Payment failure recorded:',
+            failureData
+          )
+
+
+          setResult(
+            failureData
+          )
+
+          setPaymentFailed(true)
+
+          setPaymentComplete(false)
+
+          setPurchaseRejected(false)
+
+          setPaymentStatus('')
+
+
+        } catch (err) {
+
+          console.error(
+            'Payment failure handling error:',
+            err
+          )
+
+
+          setError(
+            'Payment failed, but we could not record the failure.'
+          )
+
+          setPaymentStatus('')
+
+        } finally {
+
+          setLoading(false)
+
+        }
+
+      }
+    )
+
+
     razorpay.open()
 
   }
@@ -940,6 +1064,8 @@ function Hero() {
   const startNewSearch = () => {
 
     setPaymentComplete(false)
+
+    setPaymentFailed(false)
 
     setPurchaseRejected(false)
 
@@ -971,7 +1097,8 @@ function Hero() {
           AI BUYER INTRO
           ================================= */}
 
-      {!paymentComplete && (
+      {!paymentComplete &&
+        !paymentFailed && (
 
         <section className="ai-buyer-hero">
 
@@ -1206,6 +1333,7 @@ function Hero() {
       {agentResult &&
         !noProductFound &&
         !paymentComplete &&
+        !paymentFailed &&
         !purchaseRejected && (
 
         <section className="ai-result">
@@ -1361,7 +1489,7 @@ function Hero() {
                           <span>
 
                             {key.replace(
-                              /_/g,
+                              /\_/g,
                               ' '
                             )}
 
@@ -1810,6 +1938,7 @@ function Hero() {
 
             </div>
 
+
           </div>
 
 
@@ -1818,8 +1947,13 @@ function Hero() {
       )}
 
 
+      {/* =================================
+          NO PRODUCT FOUND
+          ================================= */}
+
       {noProductFound &&
         !paymentComplete &&
+        !paymentFailed &&
         !purchaseRejected && (
 
         <section className="ai-payment-success">
@@ -1857,7 +1991,8 @@ function Hero() {
           ================================= */}
 
       {purchaseRejected &&
-        !paymentComplete && (
+        !paymentComplete &&
+        !paymentFailed && (
 
         <section className="ai-payment-success">
 
@@ -1882,6 +2017,90 @@ function Hero() {
             }
           >
             Start a new search
+          </button>
+
+        </section>
+
+      )}
+
+
+      {/* =================================
+          PAYMENT FAILED
+          ================================= */}
+
+      {paymentFailed &&
+        !paymentComplete && (
+
+        <section className="ai-payment-success">
+
+          <p className="ai-result-label">
+            PAYMENT FAILED
+          </p>
+
+
+          <h2>
+            We couldn't complete your payment.
+          </h2>
+
+
+          <p>
+            Your payment was not completed and your TechNest order was not confirmed.
+            The failed transaction has been recorded in the audit trail.
+          </p>
+
+
+          <div className="ai-success-details">
+
+            <div className="ai-success-item">
+
+              <span>
+                Payment
+              </span>
+
+
+              <strong>
+                Failed
+              </strong>
+
+            </div>
+
+
+            <div className="ai-success-item">
+
+              <span>
+                Order
+              </span>
+
+
+              <strong>
+                Not confirmed
+              </strong>
+
+            </div>
+
+
+            <div className="ai-success-item">
+
+              <span>
+                Audit
+              </span>
+
+
+              <strong>
+                Failure recorded
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <button
+            onClick={
+              startNewSearch
+            }
+          >
+            Start a new purchase
           </button>
 
         </section>
@@ -1977,4 +2196,4 @@ function Hero() {
 }
 
 
-export default Hero 
+export default Hero

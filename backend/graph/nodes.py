@@ -413,13 +413,29 @@ def prepare_checkout(state: AgentState):
 
 # Ninth node
 
-
 def payment_wait_node(state: AgentState):
 
     payment_data = interrupt({
         "type": "payment",
         "message": "Waiting for Razorpay payment confirmation."
     })
+
+    if payment_data.get("payment_status") == "failed":
+
+        state["payment_status"] = "failed"
+
+        state["razorpay_payment_id"] = (
+            payment_data.get("razorpay_payment_id", "")
+        )
+
+        state["razorpay_order_id"] = (
+            payment_data.get(
+                "razorpay_order_id",
+                state.get("razorpay_order_id", "")
+            )
+        )
+
+        return state
 
     state["razorpay_payment_id"] = (
         payment_data["razorpay_payment_id"]
@@ -436,11 +452,12 @@ def payment_wait_node(state: AgentState):
     return state
 
 
-
 # Tenth node
 
-
 def verify_payment(state: AgentState):
+
+    if state.get("payment_status") == "failed":
+        return state
 
     try:
 
@@ -457,7 +474,6 @@ def verify_payment(state: AgentState):
         state["payment_status"] = "failed"
 
     return state
-
 
 
 # Eleventh node
